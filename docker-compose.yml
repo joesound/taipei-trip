@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+    flask-app:
+        container_name: flask-app
+        build: ./
+        restart: always
+        ports:
+            - '5000:5000'
+        volumes:
+            - ./app:/app
+        networks:
+            - backend
+
+    mysql-db:
+        container_name: mysql-db
+        image: mysql:8.0
+        restart: always
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: taipei_attraction
+        ports:
+            - '3308:3306'
+        volumes:
+            - ./DB:/var/lib/mysql
+        networks:
+            - backend
+
+networks:
+    backend:
+
+volumes:
+    ./:
+    ./DB:
